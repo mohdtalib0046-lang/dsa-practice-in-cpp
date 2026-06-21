@@ -773,3 +773,93 @@ public:                                                          // leetcode 15
         
     }
 };
+
+
+
+
+
+
+
+class Solution {                                                 // fibonachi by recursion
+public:
+    int fib(int n) {
+        if(n==1 || n==0 ){
+            return n;
+
+          
+        }
+        return fib(n-1) + fib(n-2);  
+        
+    }
+};
+
+
+
+
+
+
+
+
+class Solution {                                                // leetcode 51
+public:
+
+    bool isSafe(vector<string>& board, int row, int col, int n) {
+
+        // Upper Left Diagonal
+        int r = row, c = col;
+        while (r >= 0 && c >= 0) {
+            if (board[r][c] == 'Q') return false;
+            r--;
+            c--;
+        }
+
+        // Same Column
+        r = row;
+        c = col;
+        while (r >= 0) {
+            if (board[r][c] == 'Q') return false;
+            r--;
+        }
+
+        // Upper Right Diagonal
+        r = row;
+        c = col;
+        while (r >= 0 && c < n) {
+            if (board[r][c] == 'Q') return false;
+            r--;
+            c++;
+        }
+
+        return true;
+    }
+
+    void nQueens(vector<string>& board, int row, int n,
+                 vector<vector<string>>& ans) {
+
+        if (row == n) {
+            ans.push_back(board);
+            return;
+        }
+
+        for (int j = 0; j < n; j++) {
+            if (isSafe(board, row, j, n)) {
+
+                board[row][j] = 'Q';
+
+                nQueens(board, row + 1, n, ans);
+
+                board[row][j] = '.';
+            }
+        }
+    }
+
+    vector<vector<string>> solveNQueens(int n) {
+
+        vector<string> board(n, string(n, '.'));
+        vector<vector<string>> ans;
+
+        nQueens(board, 0, n, ans);
+
+        return ans;
+    }
+};
